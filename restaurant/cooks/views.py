@@ -45,7 +45,7 @@ class CookDeleteView(generic.DeleteView):
     template_name = "cooks/cook_confirm_delete.html"
     success_url = reverse_lazy("cooks:cooks_list")
 
-@login_required()
+
 class CookUpdateView(generic.UpdateView):
     model = Cook
     context_object_name = "cook_update"

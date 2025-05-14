@@ -1,12 +1,15 @@
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
 from django.views import generic
 
 from restaurant.cooks.models import Cook
 from restaurant.dishes.models import Dish
 
+def is_admin(user):
+    return user.is_staff
 
 @login_required
 def index(request):
@@ -39,6 +42,7 @@ class CookDetailView(generic.DetailView):
     template_name = "cooks/cook_detail.html"
 
 
+@method_decorator([login_required, user_passes_test(is_admin)], name='dispatch')
 class CookDeleteView(generic.DeleteView):
     model = Cook
     context_object_name = "cook_delete"
@@ -46,6 +50,7 @@ class CookDeleteView(generic.DeleteView):
     success_url = reverse_lazy("cooks:cooks_list")
 
 
+@method_decorator([login_required, user_passes_test(is_admin)], name='dispatch')
 class CookUpdateView(generic.UpdateView):
     model = Cook
     context_object_name = "cook_update"

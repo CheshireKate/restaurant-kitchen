@@ -1,14 +1,13 @@
-from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from django.utils.decorators import method_decorator
 from django.views import generic
 
-from restaurant.cooks.views import is_admin
+from restaurant.cooks.admin import IsAdminMixin
 from restaurant.customers.forms import CustomerForm
 from restaurant.customers.models import Customer
 
-@method_decorator([login_required, user_passes_test(is_admin)], name='dispatch')
-class CustomerListView(generic.ListView):
+
+class CustomerListView(generic.ListView, LoginRequiredMixin, IsAdminMixin):
     model = Customer
 
 

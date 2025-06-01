@@ -9,6 +9,7 @@ services:
     plan: free
     name: restaurant
     runtime: python
+    pythonVersion: 3.11
     buildCommand: './build.sh'
     startCommand: 'python -m gunicorn restaurant.asgi:application -k uvicorn.workers.UvicornWorker'
     envVars:

@@ -1,6 +1,6 @@
 from django.contrib.auth.forms import UserCreationForm, forms
 
-from models import Customer
+from restaurant.customers.models import Customer
 
 
 class CustomerForm(UserCreationForm):

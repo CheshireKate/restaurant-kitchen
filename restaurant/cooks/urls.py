@@ -3,9 +3,6 @@ from django.urls import path, include
 from restaurant.cooks.views import test_session_view, CookListView, CookDetailView, CookDeleteView, CookUpdateView, index
 
 urlpatterns = [
-    path(
-        "restaurant/dishes", include("dishes.urls", namespace="dishes")
-    ),
     path("", index, name="index"),
     path("restaurant/cooks/", CookListView.as_view(), name="cooks-list"),
     path("restaurant/cooks/<int:pk>/", CookDetailView.as_view(), name="cook-detail"),

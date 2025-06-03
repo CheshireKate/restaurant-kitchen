@@ -3,13 +3,10 @@ from django.contrib.auth.forms import UserCreationForm, forms
 from restaurant.customers.models import Customer
 
 
-class CustomerForm(UserCreationForm):
-    MIN_BIRTH_YEAR = 1900
-    MAX_BIRTH_YEAR = 2025
-
+class CustomerForm(forms.ModelForm):
     class Meta:
         model = Customer
-        fields = UserCreationForm.Meta.fields
+        fields = ['full_name', 'birth_year']
 
 
 class DishNameSearchForm(forms.Form):

@@ -20,10 +20,10 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path(
-        "cooks/", include("restaurant.cooks.urls", namespace="cooks")
+        "cooks/", include("restaurant.cooks.urls")
     ),
     path('customers/', include('restaurant.customers.urls')),
     path(
-        "dishes", include("restaurant.dishes.urls", namespace="dishes")
+        "dishes", include("restaurant.dishes.urls")
     ),
 ]

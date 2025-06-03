@@ -22,8 +22,8 @@ urlpatterns = [
     path(
         "cooks/", include("restaurant.cooks.urls", namespace="cooks")
     ),
-    path('', include('restaurant.customers.urls')),
+    path('customers/', include('restaurant.customers.urls')),
     path(
-        "restaurant/dishes", include("dishes.urls", namespace="dishes")
+        "dishes", include("restaurant.dishes.urls", namespace="dishes")
     ),
 ]

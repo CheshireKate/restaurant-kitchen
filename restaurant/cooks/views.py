@@ -34,26 +34,26 @@ def index(request):
 class CookListView(generic.ListView, LoginRequiredMixin, IsAdminMixin):
    model = Cook
    context_object_name = "cooks_list"
-   template_name = "cooks_list.html"
+   template_name = "cooks/cooks_list.html"
 
 
 class CookDetailView(generic.DetailView):
     model = Cook
     context_object_name = "cook_detail"
-    template_name = "cook_detail.html"
+    template_name = "cooks/cook_detail.html"
 
 
 class CookDeleteView(generic.DeleteView, LoginRequiredMixin, IsAdminMixin):
     model = Cook
     context_object_name = "cook_delete"
-    template_name = "cook_confirm_delete.html"
+    template_name = "cooks/cook_confirm_delete.html"
     success_url = reverse_lazy("cooks:cooks_list")
 
 
 class CookUpdateView(generic.UpdateView, LoginRequiredMixin, IsAdminMixin):
     model = Cook
     context_object_name = "cook_update"
-    template_name = "cook_update.html"
+    template_name = "cooks/cook_update.html"
     success_url = reverse_lazy("cooks:cooks_detail")
 
 

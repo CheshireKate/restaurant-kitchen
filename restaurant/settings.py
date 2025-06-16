@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'restaurant.customers',
     'django_bootstrap5',
     'crispy_forms',
+    'crispy_bootstrap5',
 ]
 
 MIDDLEWARE = [

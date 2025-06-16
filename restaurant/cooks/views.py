@@ -26,7 +26,7 @@ def index(request):
         "num_visits": num_visits + 1,
     }
 
-    return render(request, "index.html", context=context)
+    return render(request, "main.html", context=context)
 
 
 class CookListView(generic.ListView, LoginRequiredMixin, IsAdminMixin):

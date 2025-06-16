@@ -11,24 +11,6 @@ from restaurant.dishes.models import Dish
 def is_admin(user):
     return user.is_staff
 
-def index(request):
-    """View function for the home page of the site."""
-
-    num_cooks = Cook.objects.count()
-    num_dishes = Dish.objects.count()
-
-    num_visits = request.session.get("num_visits", 0)
-    request.session["num_visits"] = num_visits + 1
-
-    context = {
-        "num_cooks": num_cooks,
-        "num_dishes": num_dishes,
-        "num_visits": num_visits + 1,
-    }
-
-    return render(request, "main.html", context=context)
-
-
 class CookListView(generic.ListView, LoginRequiredMixin, IsAdminMixin):
    model = Cook
    context_object_name = "cooks_list"

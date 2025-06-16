@@ -29,4 +29,6 @@ urlpatterns = [
     path(
         "dishes", include("restaurant.dishes.urls")
     ),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('search/', views.search_view, name='search'),
 ]

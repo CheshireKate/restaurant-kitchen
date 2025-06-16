@@ -16,3 +16,14 @@ def index(request):
         "num_visits": num_visits + 1,
     }
     return render(request, "main.html", context=context)
+
+
+def search_view(request):
+    query = request.GET.get('q')
+    results = []
+    if query:
+        cooks = Cook.objects.filter(name__icontains=query)
+        dishes = Dish.objects.filter(name__icontains=query)
+        results.extend(cooks)
+        results.extend(dishes)
+    return render(request, 'search.html', {'query': query, 'results': results})

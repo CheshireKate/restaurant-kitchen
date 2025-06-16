@@ -1,6 +1,6 @@
 from django.urls import path, include
 
-from restaurant.cooks.views import test_session_view, CookListView, CookDetailView, CookDeleteView, CookUpdateView, index
+from restaurant.cooks.views import test_session_view, CookListView, CookDetailView, CookDeleteView, CookUpdateView
 
 urlpatterns = [
     path("", CookListView.as_view(), name="cooks-list"),

@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from cooks.models import Cook
-from dishes.models import Dish
+from restaurant.cooks.models import Cook
+from restaurant.dishes.models import Dish
 
 def index(request):
     """View function for the home page of the site."""

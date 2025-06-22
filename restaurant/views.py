@@ -1,6 +1,9 @@
+from django.db.models import Q
 from django.shortcuts import render
 from restaurant.cooks.models import Cook
 from restaurant.dishes.models import Dish
+from restaurant.forms import SearchForm
+
 
 def index(request):
     """View function for the home page of the site."""
@@ -19,11 +22,19 @@ def index(request):
 
 
 def search_view(request):
-    query = request.GET.get('q')
+    form = SearchForm(request.GET)
     results = []
-    if query:
-        cooks = Cook.objects.filter(name__icontains=query)
-        dishes = Dish.objects.filter(name__icontains=query)
-        results.extend(cooks)
-        results.extend(dishes)
-    return render(request, 'search.html', {'query': query, 'results': results})
+
+    if form.is_valid():
+        query = form.cleaned_data['query']
+        if query:
+            cooks = Cook.objects.filter(
+                Q(first_name__icontains=query) | Q(last_name__icontains=query)
+            )
+            dishes = Dish.objects.filter(name__icontains=query)
+            results.extend(cooks)
+            results.extend(dishes)
+    return render(request, 'search.html', {
+        'search_form': form,
+        'results': results,
+    })

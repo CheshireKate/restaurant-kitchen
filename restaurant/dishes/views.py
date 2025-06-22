@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views import generic
 
@@ -19,23 +20,29 @@ class DishListView(generic.ListView):
 
 class DishDetailView(generic.DetailView):
    model = Dish
-   context_object_name = "dish_detail"
+   context_object_name = "dish"
    template_name = "dishes/dish_detail.html"
+
 
 class DishDeleteView(generic.DeleteView, LoginRequiredMixin, IsAdminMixin):
     model = Dish
-    context_object_name = "dish_confirm_delete"
-    template_name = "dishes/dish_detail.html"
+    context_object_name = "dish"
+    template_name = "dishes/dish_confirm_delete.html"
+    success_url = reverse_lazy("dishes:dishes_list")
 
 
 class DishCreateView(generic.CreateView, LoginRequiredMixin, IsAdminMixin):
     model = Dish
-    context_object_name = "dish_create"
+    context_object_name = "dish"
     template_name = "dishes/dish_detail.html"
 
 
 class DishUpdateView(generic.UpdateView, LoginRequiredMixin, IsAdminMixin):
     model = Dish
-    context_object_name = "dish_update"
-    template_name = "dishes/dish_detail.html"
+    context_object_name = "dish"
+    template_name = "dishes/dish_update.html"
+    fields = ["name", "description", "price", "dish_type", "cooks", "ingredients"]
+
+    def get_success_url(self):
+        return reverse_lazy("dishes:dish_detail", kwargs={"pk": self.object.pk})
 

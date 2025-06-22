@@ -1,6 +1,6 @@
 {% extends 'main.html' %}
 
- {% block content %}
+{% block content %}
 
 {% if is_paginated %}
   <ul class="pagination">
@@ -23,12 +23,49 @@
   </ul>
 {% endif %}
 
-<a href="?{% query_transform request page=page_obj.next_page_number %}" class="page-link">next page</a>
+{% block title %}Dishes{% endblock %}
 
+{% if dishes_list %}
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Dish Type</th>
+        <th>Cooks</th>
+        <th>Update</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
 
-<h1> Dishes: </h1>
-{% for dish in dishes %}
-    <a href="{% url 'dish-detail'%}">{{dish.name}}</a>
-{% end for}
-
-{% end block%}
+      {% for dish in dishes_list %}
+        <tr>
+          <td>{{ dish.id }}</td>
+          <td>{{ dish.name }}</td>
+          <td>{{ dish.description }}</td>
+          <td>{{ dish.price }}</td>
+          <td>{{ dish.dish_type.name }}</td>
+          <td>
+          <ul>
+          {% for cook in dish.cooks.all %}
+            <li> {{cook.last_name}} </li>
+          {% endfor%}
+          </ul>
+          </td>
+          <td>
+            <a href="{% url 'dishes:dish_update' pk=dish.id %}">Update</a>
+          </td>
+          <td>
+            <a style="color: red" href="{% url 'dishes:dish_delete' pk=dish.id %}">Delete</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <p>There are no dishes right now.</p>
+{% endif %}
+{% endblock%}

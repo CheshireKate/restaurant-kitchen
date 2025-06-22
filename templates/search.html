@@ -1,7 +1,21 @@
 {% extends 'main.html' %}
 {% load crispy_forms_tags %}
 
-<form action="" method="get">
-  {{ search_form|crispy }}
-  <input type="submit">
-</form>
+{% block content %}
+  <h1>Search</h1>
+  <form action="" method="get">
+    {{ search_form|crispy }}
+    <input type="submit" value="Search">
+  </form>
+
+  {% if results %}
+    <h2>Results:</h2>
+    <ul>
+      {% for item in results %}
+        <li>{{ item }}</li>
+      {% endfor %}
+    </ul>
+  {% elif search_form.cleaned_data.q %}
+    <p>No results found.</p>
+  {% endif %}
+{% endblock %}

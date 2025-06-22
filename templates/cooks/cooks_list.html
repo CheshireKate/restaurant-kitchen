@@ -38,16 +38,17 @@
       </tr>
     </thead>
     <tbody>
+
       {% for cook in cooks_list %}
         <tr>
           <td>{{ cook.id }}</td>
           <td>{{ cook.first_name }}</td>
           <td>{{ cook.last_name }}</td>
           <td>
-            <a href="{% url 'restaurant/cooks:cook-update' pk=cook.id %}">Update</a>
+            <a href="{% url 'cooks:cook_update' pk=cook.id %}">Update</a>
           </td>
           <td>
-            <a style="color: red" href="{% url 'restaurant/cooks:cook-delete' pk=cook.id %}">Delete</a>
+            <a style="color: red" href="{% url 'cooks:cook_delete' pk=cook.id %}">Delete</a>
           </td>
         </tr>
       {% endfor %}

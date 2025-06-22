@@ -19,22 +19,25 @@ class CookListView(generic.ListView, LoginRequiredMixin, IsAdminMixin):
 
 class CookDetailView(generic.DetailView):
     model = Cook
-    context_object_name = "cook_detail"
+    context_object_name = "cook"
     template_name = "cooks/cook_detail.html"
 
 
 class CookDeleteView(generic.DeleteView, LoginRequiredMixin, IsAdminMixin):
     model = Cook
-    context_object_name = "cook_delete"
+    context_object_name = "cook"
     template_name = "cooks/cook_confirm_delete.html"
     success_url = reverse_lazy("cooks:cooks_list")
 
 
 class CookUpdateView(generic.UpdateView, LoginRequiredMixin, IsAdminMixin):
     model = Cook
-    context_object_name = "cook_update"
+    fields = ["first_name", "last_name", "years_of_experience"]
+    context_object_name = "cook"
     template_name = "cooks/cook_update.html"
-    success_url = reverse_lazy("cooks:cooks_detail")
+
+    def get_success_url(self):
+        return reverse_lazy("cooks:cook_detail", kwargs={"pk": self.object.pk})
 
 
 def test_session_view(request):

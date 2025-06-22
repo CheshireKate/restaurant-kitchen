@@ -1,0 +1,14 @@
+{% extends "main.html" %}
+
+{% block content %}
+  <h1>Update Dish</h1>
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <button type="submit" class="btn btn-primary">Save changes</button>
+  </form>
+
+  <a href="{% url 'dishes:dish_detail' pk=dish.id %}">Back to details</a>
+{% endblock %}

@@ -24,20 +24,20 @@ class DishDetailView(generic.DetailView):
    template_name = "dishes/dish_detail.html"
 
 
-class DishDeleteView(generic.DeleteView, LoginRequiredMixin, IsAdminMixin):
+class DishDeleteView(LoginRequiredMixin, IsAdminMixin, generic.DeleteView):
     model = Dish
     context_object_name = "dish"
     template_name = "dishes/dish_confirm_delete.html"
     success_url = reverse_lazy("dishes:dishes_list")
 
 
-class DishCreateView(generic.CreateView, LoginRequiredMixin, IsAdminMixin):
+class DishCreateView(LoginRequiredMixin, IsAdminMixin, generic.CreateView):
     model = Dish
     context_object_name = "dish"
     template_name = "dishes/dish_detail.html"
 
 
-class DishUpdateView(generic.UpdateView, LoginRequiredMixin, IsAdminMixin):
+class DishUpdateView(LoginRequiredMixin, IsAdminMixin, generic.UpdateView):
     model = Dish
     context_object_name = "dish"
     template_name = "dishes/dish_update.html"

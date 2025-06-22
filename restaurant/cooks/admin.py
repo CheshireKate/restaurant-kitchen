@@ -20,7 +20,7 @@ class CookAdmin(UserAdmin):
 
 class IsAdminMixin(UserPassesTestMixin):
     def test_func(self):
-        return self.request.user.is_staff()
+        return self.request.user.is_staff
 
 
 admin.site.register(Dish)

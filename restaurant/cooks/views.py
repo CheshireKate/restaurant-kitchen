@@ -11,7 +11,7 @@ from restaurant.dishes.models import Dish
 def is_admin(user):
     return user.is_staff
 
-class CookListView(generic.ListView, LoginRequiredMixin, IsAdminMixin):
+class CookListView(generic.ListView):
    model = Cook
    context_object_name = "cooks_list"
    template_name = "cooks/cooks_list.html"
@@ -23,14 +23,14 @@ class CookDetailView(generic.DetailView):
     template_name = "cooks/cook_detail.html"
 
 
-class CookDeleteView(generic.DeleteView, LoginRequiredMixin, IsAdminMixin):
+class CookDeleteView(LoginRequiredMixin, IsAdminMixin, generic.DeleteView):
     model = Cook
     context_object_name = "cook"
     template_name = "cooks/cook_confirm_delete.html"
     success_url = reverse_lazy("cooks:cooks_list")
 
 
-class CookUpdateView(generic.UpdateView, LoginRequiredMixin, IsAdminMixin):
+class CookUpdateView(LoginRequiredMixin, IsAdminMixin, generic.UpdateView):
     model = Cook
     fields = ["first_name", "last_name", "years_of_experience"]
     context_object_name = "cook"

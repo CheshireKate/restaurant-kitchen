@@ -18,7 +18,7 @@ def index(request):
         "num_dishes": num_dishes,
         "num_visits": num_visits + 1,
     }
-    return render(request, "main.html", context=context)
+    return render(request, "index.html", context=context)
 
 
 def search_view(request):

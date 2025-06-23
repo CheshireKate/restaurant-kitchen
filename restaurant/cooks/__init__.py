@@ -1,1 +1,1 @@
-import dishes
+import restaurant.dishes

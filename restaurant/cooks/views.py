@@ -1,31 +1,15 @@
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
 
+from restaurant.cooks.admin import IsAdminMixin
 from restaurant.cooks.models import Cook
 from restaurant.dishes.models import Dish
 
-
-@login_required
-def index(request):
-    """View function for the home page of the site."""
-
-    num_cooks = Cook.objects.count()
-    num_dishes = Dish.objects.count()
-
-    num_visits = request.session.get("num_visits", 0)
-    request.session["num_visits"] = num_visits + 1
-
-    context = {
-        "num_cooks": num_cooks,
-        "num_dishes": num_dishes,
-        "num_visits": num_visits + 1,
-    }
-
-    return render(request, "restaurant/index.html", context=context)
-
+def is_admin(user):
+    return user.is_staff
 
 class CookListView(generic.ListView):
    model = Cook
@@ -35,22 +19,25 @@ class CookListView(generic.ListView):
 
 class CookDetailView(generic.DetailView):
     model = Cook
-    context_object_name = "cook_detail"
+    context_object_name = "cook"
     template_name = "cooks/cook_detail.html"
 
 
-class CookDeleteView(generic.DeleteView):
+class CookDeleteView(LoginRequiredMixin, IsAdminMixin, generic.DeleteView):
     model = Cook
-    context_object_name = "cook_delete"
+    context_object_name = "cook"
     template_name = "cooks/cook_confirm_delete.html"
     success_url = reverse_lazy("cooks:cooks_list")
 
-@login_required()
-class CookUpdateView(generic.UpdateView):
+
+class CookUpdateView(LoginRequiredMixin, IsAdminMixin, generic.UpdateView):
     model = Cook
-    context_object_name = "cook_update"
+    fields = ["first_name", "last_name", "years_of_experience"]
+    context_object_name = "cook"
     template_name = "cooks/cook_update.html"
-    success_url = reverse_lazy("cooks:cooks_detail")
+
+    def get_success_url(self):
+        return reverse_lazy("cooks:cook_detail", kwargs={"pk": self.object.pk})
 
 
 def test_session_view(request):

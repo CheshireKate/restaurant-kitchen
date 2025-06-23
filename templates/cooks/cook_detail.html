@@ -1,0 +1,12 @@
+{% extends 'main.html' %}
+
+ {% block content %}
+
+<h1>Name : {{cook.first_name}}</h1>
+<h1>Surname: {{cook.last_name}}</h1>
+<h1>Experience: {{cook.years_of_experience}} years </h1>
+
+<a href="{% url 'cooks:cook_delete' pk=cook.id %}" class="btn btn-danger"> Delete this cook </a>
+<a href="{% url 'cooks:cook_update' pk=cook.id %}" class="btn btn-secondary link-to-page"> Update this cook's information </a>
+
+{% endblock%}

@@ -1,1 +1,1 @@
-import cooks
+import restaurant.cooks

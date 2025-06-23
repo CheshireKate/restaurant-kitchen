@@ -1,0 +1,30 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="text-center my-5">
+    <h1 class="display-4">Welcome to the Restaurant</h1>
+    <p class="lead">We have <strong>{{ num_cooks }}</strong> cooks and <strong>{{ num_dishes }}</strong> dishes registered.</p>
+    <p>You have visited this page <strong>{{ num_visits }}</strong> time{{ num_visits|pluralize }}.</p>
+</div>
+
+<div class="row text-center">
+    <div class="col-md-4">
+        <a class="btn btn-outline-dark w-100 py-3" href="{% url 'cooks:cooks_list' %}">
+            👨‍🍳 View Cooks
+        </a>
+    </div>
+    <div class="col-md-4">
+        <a class="btn btn-outline-dark w-100 py-3" href="{% url 'dishes:dishes_list' %}">
+            🍽 View Dishes
+        </a>
+    </div>
+    <div class="col-md-4">
+        <a class="btn btn-outline-dark w-100 py-3" href="{% url 'search' %}">
+            🔍 Search
+        </a>
+    </div>
+</div>
+{% endblock %}

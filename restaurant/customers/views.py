@@ -1,10 +1,13 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views import generic
 
+from restaurant.cooks.admin import IsAdminMixin
 from restaurant.customers.forms import CustomerForm
 from restaurant.customers.models import Customer
 
-class CustomerListView(generic.ListView):
+
+class CustomerListView(generic.ListView, LoginRequiredMixin, IsAdminMixin):
     model = Customer
 
 

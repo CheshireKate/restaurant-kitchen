@@ -1,0 +1,69 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+{% if is_paginated %}
+  <ul class="pagination">
+    {% if page_obj.has_previous %}
+      <li class="page-item">
+        <a href="?page= {{ page_obj.previous_page_number }}" class="page-link">prev</a>
+      </li>
+    {% endif %}
+
+    <li class="page-item active">
+      <span class="page-link">{{ page_obj.number }} of {{ paginator.num_pages }}</span>
+    </li>
+
+    {% if page_obj.has_next %}
+      <li class="page-item">
+        <a href="?page= {{ page_obj.next_page_number }}" class="page-link">next</a>
+      </li>
+
+    {% endif %}
+  </ul>
+{% endif %}
+
+{% block title %}Dishes{% endblock %}
+
+{% if dishes_list %}
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Dish Type</th>
+        <th>Cooks</th>
+        <th>Update</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      {% for dish in dishes_list %}
+        <tr>
+          <td>{{ dish.name }}</td>
+          <td>{{ dish.description }}</td>
+          <td>{{ dish.price }}</td>
+          <td>{{ dish.dish_type.name }}</td>
+          <td>
+          <ul>
+          {% for cook in dish.cooks.all %}
+            <li> {{cook.last_name}} </li>
+          {% endfor%}
+          </ul>
+          </td>
+          <td>
+            <a href="{% url 'dishes:dish_update' pk=dish.id %}">Update</a>
+          </td>
+          <td>
+            <a style="color: red" href="{% url 'dishes:dish_delete' pk=dish.id %}">Delete</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <p>There are no dishes right now.</p>
+{% endif %}
+{% endblock%}

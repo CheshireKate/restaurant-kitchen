@@ -1,0 +1,18 @@
+{% extends "main.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<h1>Log out</h1>
+
+<form method="post" action="{% url 'logout' %}">
+  {% csrf_token %}
+  {{ form|crispy }}
+
+  <input type="submit" value="Logout" class="btn btn-primary" />
+  <input type="hidden" name="next" value="{{ next }}" />
+</form>
+
+<a href="{% url 'login'%}">Click here to log in again.</a>
+
+{% endblock %}
